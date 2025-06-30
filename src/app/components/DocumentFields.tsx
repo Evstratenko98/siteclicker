@@ -5,17 +5,13 @@ type Props = {
     setSheetId: (value: string) => void;
     checkListName: string;
     setCheckListName: (value: string) => void;
-    fillListName: string;
-    setFillListName: (value: string) => void;
 };
 
 const DocumentFields: React.FC<Props> = ({
     sheetId,
     setSheetId,
     checkListName,
-    setCheckListName,
-    fillListName,
-    setFillListName
+    setCheckListName
 }) => (
     <>
         <div className="form-floating mb-3">
@@ -39,17 +35,6 @@ const DocumentFields: React.FC<Props> = ({
                 onChange={(e) => setCheckListName(e.target.value)}
             />
             <label htmlFor="checkListName">Название Листа проверки</label>
-        </div>
-        <div className="form-floating mb-3">
-            <input
-                type="text"
-                className="form-control"
-                id="fillListName"
-                placeholder="Название Листа заполнения"
-                value={fillListName}
-                onChange={(e) => setFillListName(e.target.value)}
-            />
-            <label htmlFor="fillListName">Название Листа заполнения</label>
         </div>
     </>
 );

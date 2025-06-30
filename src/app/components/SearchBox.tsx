@@ -5,9 +5,10 @@ type Props = {
     setText: (value: string) => void;
     onSearchClick: () => void;
     disabled: boolean;
+    isLoading: boolean;
 };
 
-const SearchBox: React.FC<Props> = ({ text, setText, onSearchClick, disabled }) => (
+const SearchBox: React.FC<Props> = ({ text, setText, onSearchClick, disabled, isLoading }) => (
     <div className="input-group mb-3">
         <input
             type="text"
@@ -21,9 +22,16 @@ const SearchBox: React.FC<Props> = ({ text, setText, onSearchClick, disabled }) 
             className="btn btn-primary"
             type="button"
             onClick={onSearchClick}
-            disabled={disabled}
+            disabled={disabled || isLoading}
         >
-            Получить сайты
+            {isLoading ? (
+                <>
+                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Загрузка...
+                </>
+            ) : (
+                'Получить сайты'
+            )}
         </button>
     </div>
 );

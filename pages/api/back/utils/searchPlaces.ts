@@ -1,6 +1,7 @@
 import {API_KEY, COUNTRIES} from "../constants";
+import {GoogleResponse} from "../types/places";
 
-export const searchPlaces = async (textQuery: string, countryKey: keyof typeof COUNTRIES) => {
+export const searchPlaces = async (textQuery: string, countryKey: keyof typeof COUNTRIES, nextPageToken?: string): Promise<GoogleResponse | null> => {
     const countryInfo = COUNTRIES[countryKey]
 
     if (!countryInfo) {
@@ -14,29 +15,36 @@ export const searchPlaces = async (textQuery: string, countryKey: keyof typeof C
     const headers = {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': API_KEY,
-        'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.location,places.websiteUri'
+        'X-Goog-FieldMask': '*'
+        // 'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.location,places.websiteUri'
     };
 
-    const body = JSON.stringify({
-        textQuery: fullQuery,
-        languageCode: countryInfo.languageCode
-    });
+    const body: {
+        languageCode: string;
+        pageSize: number;
+        textQuery?: string;
+        nextPageToken?: string;
+    } = {
+        languageCode: countryInfo.languageCode,
+        pageSize: 5,
+    };
+
+    if(nextPageToken) {
+        body.nextPageToken = nextPageToken;
+    } else {
+        body.textQuery = fullQuery;
+    }
 
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers,
-            body
+            body: JSON.stringify(body),
         });
 
-        if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data.places || [];
+        return await response.json();
     } catch (error) {
         console.error('Ошибка при запросе к Places API:', error);
-        return [];
+        return null;
     }
 }

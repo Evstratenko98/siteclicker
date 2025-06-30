@@ -2,23 +2,29 @@ import {searchPlaces} from "./searchPlaces";
 import {checkIfLandingPage} from "./checkIfLandingPage";
 import {formatUrl} from "./formatUrl";
 import {getExistingSites} from "../google/getExistingSites";
-import {addWebsiteInSheet} from "../google/addWebsiteInSheet";
 import {COUNTRIES} from "../constants";
+import {GetSitesResponse, LogPlace, Status} from "../types/places";
 
 export const getSites = async (
     params: {
         text: string,
         sheetId: string,
         checkListName: string,
-        fillListName: string,
         countryTitle: keyof typeof COUNTRIES
+        nextPageToken?: string;
     }
-) => {
-    const {text, sheetId, checkListName, fillListName, countryTitle} = params;
+): Promise<GetSitesResponse | null> => {
+    const {text, sheetId, checkListName, countryTitle} = params;
     const existingSites = await getExistingSites(sheetId, checkListName);
-    const places = await searchPlaces(text, countryTitle);
-    for(const place of places) {
-        const logPlace = {
+    const googleResponse = await searchPlaces(text, countryTitle);
+    const logPlaces: LogPlace[] = [];
+
+    if(!googleResponse) {
+        return null;
+    }
+
+    for(const place of googleResponse.places) {
+        const logPlace: LogPlace = {
             displayName: place.displayName,
             formattedAddress: place.formattedAddress,
             isWebsiteUri: !!place.websiteUri,
@@ -29,10 +35,10 @@ export const getSites = async (
             isSocialNetwork: false,
             siteDetails: {},
             isExistsInCheckList: false,
-            isAddedInSheet: false,
+            status: Status.UNSUITABLE,
         }
 
-        if (place.websiteUri) {
+        if (logPlace.isWebsiteUri) {
             await checkIfLandingPage(place.websiteUri).then(result => {
                 if (result.error) {
                     logPlace.isError = true;
@@ -43,17 +49,19 @@ export const getSites = async (
                 }
             });
         }
-        if(place.websiteUri && !place.isLanding) {
+        if(logPlace.isWebsiteUri && !logPlace.isLanding) {
             const website = formatUrl(place.websiteUri);
-            logPlace.isExistsInCheckList = existingSites.includes(website)
-
-            if(!logPlace.isExistsInCheckList) {
-                await addWebsiteInSheet({ website, sheetId, fillListName })
-                    .then(() => logPlace.isAddedInSheet = true)
-                    .catch(() => logPlace.isAddedInSheet = false);
-            }
+            logPlace.isExistsInCheckList = existingSites.includes(website);
+        }
+        if(logPlace.isWebsiteUri && !logPlace.isLanding && !logPlace.isExistsInCheckList && !logPlace.isError && !logPlace.isSocialNetwork) {
+            logPlace.status = Status.SUITABLE;
         }
 
-        console.log(logPlace);
+        logPlaces.push(logPlace);
     }
+
+    return {
+        logPlaces,
+        nextPageToken: googleResponse?.nextPageToken || '',
+    };
 }

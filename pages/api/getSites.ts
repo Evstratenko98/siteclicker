@@ -6,13 +6,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(405).json({ error: 'Метод не разрешён' });
     }
 
-    const { text, sheetId, checkListName, fillListName, countryTitle } = req.body;
+    const { text, sheetId, checkListName, countryTitle, nextPageToken } = req.body;
 
-    if (!text || !sheetId || !checkListName || !fillListName || !countryTitle) {
+    if (!text || !sheetId || !checkListName || !countryTitle) {
         return res.status(400).json({ error: 'Не все поля заполнены' });
     }
 
-    // Возвращаем успешный ответ
-    getSites({ text, sheetId, checkListName, fillListName, countryTitle })
-    return res.status(200).json({ message: 'Данные успешно получены' });
+    const result = await getSites({ text, sheetId, checkListName, countryTitle, nextPageToken })
+    return res.status(200).json(result);
 }
