@@ -1,6 +1,12 @@
 import {getGoogleSheets} from "./getGoogleSheets";
 
-export const getExistingSites = async (sheetId: string, checkListName: string): Promise<string[]> => {
+export const getExistingSites = async (): Promise<string[]> => {
+    const sheetId = process.env.SHEET_ID;
+    const checkListName = process.env.CHECK_LIST_TITLE;
+    if(!sheetId || !checkListName) {
+        return [];
+    }
+
     const sheets = await getGoogleSheets();
 
     const rows = ['!A:A', '!B:B', '!C:C', '!D:D'];

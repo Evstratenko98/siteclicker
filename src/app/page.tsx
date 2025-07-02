@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBox from "@/app/components/SearchBox";
 import CountrySelector from "@/app/components/CountrySelector";
-import DocumentFields from "@/app/components/DocumentFields";
 import Alert from "@/app/components/Alert";
 import {GetSitesApiRequestDto, FrontLogPlace} from "@/app/api/getSitesApi/getSitesApi.types";
 import {getSitesApi} from "@/app/api/getSitesApi/getSitesApi";
@@ -11,8 +10,6 @@ import SitesOffCanvas from "@/app/components/SitesOffcanvas";
 
 export default function Home() {
   const [text, setText] = useState('');
-  const [sheetId, setSheetId] = useState('');
-  const [checkListName, setCheckListName] = useState('');
   const [countryTitle, setCountryTitle] = useState('');
   const [alert, setAlert] = useState<null | { type: 'success' | 'danger'; message: string }>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,16 +18,12 @@ export default function Home() {
   const [isOffCanvasVisible, setIsOffCanvasVisible] = useState(false);
 
   const isFormValid =
-      sheetId.trim() !== '' &&
-      checkListName.trim() !== '' &&
       countryTitle.trim() !== '';
 
   const handleGetSites = async () => {
     setIsLoading(true);
     const body: GetSitesApiRequestDto ={
       text,
-      sheetId,
-      checkListName,
       countryTitle,
       nextPageToken
     };
@@ -75,12 +68,6 @@ export default function Home() {
             <CountrySelector
                 countryTitle={countryTitle}
                 setCountryTitle={setCountryTitle}
-            />
-            <DocumentFields
-                sheetId={sheetId}
-                setSheetId={setSheetId}
-                checkListName={checkListName}
-                setCheckListName={setCheckListName}
             />
           </div>
         </div>

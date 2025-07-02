@@ -1,7 +1,5 @@
 export type GetSitesApiRequestDto = {
     text: string;
-    sheetId: string;
-    checkListName: string;
     countryTitle: string;
     nextPageToken: string;
 }

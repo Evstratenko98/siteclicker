@@ -1,68 +1,29 @@
+import {CountryInfo} from "./types/places";
+
 export const GOOGLE_SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 
-export const JSON_FILE_WITH_KEYS = 'siteclicker.json';
-export const COUNTRIES = {
-    TURKEY: {
-        title: 'Turkey',
-        languageCode: 'tr',
-        country: 'Türkiye'
-    },
-    USA: {
-        title: 'USA',
-        languageCode: 'en',
-        country: 'United States'
-    },
-    RUSSIA: {
-        title: 'Russia',
-        languageCode: 'ru',
-        country: 'Россия'
-    },
-    GERMANY: {
-        title: 'Germany',
-        languageCode: 'de',
-        country: 'Deutschland'
-    },
-    FRANCE: {
-        title: 'France',
-        languageCode: 'fr',
-        country: 'France'
-    },
-    SPAIN: {
-        title: 'Spain',
-        languageCode: 'es',
-        country: 'España'
-    },
-    ITALY: {
-        title: 'Italy',
-        languageCode: 'it',
-        country: 'Italia'
-    },
-    JAPAN: {
-        title: 'Japan',
-        languageCode: 'ja',
-        country: '日本'
-    },
-    CHINA: {
-        title: 'China',
-        languageCode: 'zh',
-        country: '中国'
-    },
-    KOREA: {
-        title: 'Korea',
-        languageCode: 'ko',
-        country: '대한민국'
-    },
-    BRAZIL: {
-        title: 'Brazil',
-        languageCode: 'pt-BR',
-        country: 'Brasil'
-    }
+export const COUNTRIES: Record<string, CountryInfo> = {
+    POLAND:        { title: 'Poland',        languageCode: 'pl', regionCode: 'PL', country: 'Poland' },
+    FRANCE:        { title: 'France',        languageCode: 'fr', regionCode: 'FR', country: 'France' },
+    ITALY:         { title: 'Italy',         languageCode: 'it', regionCode: 'IT', country: 'Italy' },
+    DENMARK:       { title: 'Denmark',       languageCode: 'da', regionCode: 'DK', country: 'Denmark' },
+    UNITED_KINGDOM:{ title: 'United Kingdom',languageCode: 'en', regionCode: 'GB', country: 'United Kingdom' },
+    BULGARIA:      { title: 'Bulgaria',      languageCode: 'bg', regionCode: 'BG', country: 'Bulgaria' },
+    NETHERLANDS:   { title: 'Netherlands',   languageCode: 'nl', regionCode: 'NL', country: 'Netherlands' },
+    SWEDEN:        { title: 'Sweden',        languageCode: 'sv', regionCode: 'SE', country: 'Sweden' },
+    SPAIN:         { title: 'Spain',         languageCode: 'es', regionCode: 'ES', country: 'Spain' },
+    CZECHIA:       { title: 'Czechia',       languageCode: 'cs', regionCode: 'CZ', country: 'Czechia' },
+    SWITZERLAND:   { title: 'Switzerland',   languageCode: 'de', regionCode: 'CH', country: 'Switzerland' },
+    AUSTRIA:       { title: 'Austria',       languageCode: 'de', regionCode: 'AT', country: 'Austria' },
+    AZERBAIJAN:    { title: 'Azerbaijan',    languageCode: 'az', regionCode: 'AZ', country: 'Azerbaijan' },
+    GERMANY:       { title: 'Germany',       languageCode: 'de', regionCode: 'DE', country: 'Germany' },
+    FINLAND:       { title: 'Finland',       languageCode: 'fi', regionCode: 'FI', country: 'Finland' },
+    SLOVENIA:      { title: 'Slovenia',      languageCode: 'sl', regionCode: 'SI', country: 'Slovenia' },
+    TURKEY:        { title: 'Turkey',        languageCode: 'tr', regionCode: 'TR', country: 'Turkey' },
+    SLOVAKIA:      { title: 'Slovakia',      languageCode: 'sk', regionCode: 'SK', country: 'Slovakia' },
+    PORTUGAL:      { title: 'Portugal',      languageCode: 'pt', regionCode: 'PT', country: 'Portugal' },
+    IRELAND:       { title: 'Ireland',       languageCode: 'en', regionCode: 'IE', country: 'Ireland' },
+    BELGIUM:       { title: 'Belgium',       languageCode: 'nl', regionCode: 'BE', country: 'Belgium' },
+    ESTONIA:       { title: 'Estonia',       languageCode: 'et', regionCode: 'EE', country: 'Estonia' },
+    NORWAY:        { title: 'Norway',        languageCode: 'no', regionCode: 'NO', country: 'Norway' },
 };
-export const API_KEY = 'AIzaSyDvBkzhDASX2lfUjNsnGkzlrBU-m2ddoLA';
-
-export const query = 'Temizlik ve ev temizliği hizmetleri';
-export const countryKey = 'TURKEY';
-
-export const SHEET_ID = '1t-_EehjxXbqKslCD5OPj9dfyGhM_-GMAGFR1RWUzDZI';
-export const SHEET_NAME = 'Доноры исп-е (копия)'; // имя листа
-export const SHEET_NAME_2 = 'Лист2';

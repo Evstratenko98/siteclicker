@@ -4,18 +4,17 @@ import {formatUrl} from "./formatUrl";
 import {getExistingSites} from "../google/getExistingSites";
 import {COUNTRIES} from "../constants";
 import {GetSitesResponse, LogPlace, Status} from "../types/places";
+import {checkSocialNetwork} from "./checkSocialNetwork";
 
 export const getSites = async (
     params: {
         text: string,
-        sheetId: string,
-        checkListName: string,
         countryTitle: keyof typeof COUNTRIES
         nextPageToken?: string;
     }
 ): Promise<GetSitesResponse | null> => {
-    const {text, sheetId, checkListName, countryTitle} = params;
-    const existingSites = await getExistingSites(sheetId, checkListName);
+    const {text, countryTitle} = params;
+    const existingSites = await getExistingSites();
     const googleResponse = await searchPlaces(text, countryTitle);
     const logPlaces: LogPlace[] = [];
 
@@ -48,6 +47,7 @@ export const getSites = async (
                     logPlace.siteDetails = {...result.details};
                 }
             });
+            logPlace.isSocialNetwork = checkSocialNetwork(logPlace.websiteUri);
         }
         if(logPlace.isWebsiteUri && !logPlace.isLanding) {
             const website = formatUrl(place.websiteUri);

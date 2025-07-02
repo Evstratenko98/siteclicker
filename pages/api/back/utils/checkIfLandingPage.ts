@@ -4,7 +4,8 @@ import * as cheerio from 'cheerio';
 export const checkIfLandingPage = async (siteUrl: string) => {
     try {
         const { data: html } = await axios.get(siteUrl, {
-            headers: { 'User-Agent': 'Mozilla/5.0' }
+            headers: { 'User-Agent': 'Mozilla/5.0' },
+            timeout: 3000
         });
 
         const $ = cheerio.load(html);

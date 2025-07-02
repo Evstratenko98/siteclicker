@@ -1,4 +1,4 @@
-import {API_KEY, COUNTRIES} from "../constants";
+import {COUNTRIES} from "../constants";
 import {GoogleResponse} from "../types/places";
 
 export const searchPlaces = async (textQuery: string, countryKey: keyof typeof COUNTRIES, nextPageToken?: string): Promise<GoogleResponse | null> => {
@@ -14,7 +14,7 @@ export const searchPlaces = async (textQuery: string, countryKey: keyof typeof C
 
     const headers = {
         'Content-Type': 'application/json',
-        'X-Goog-Api-Key': API_KEY,
+        'X-Goog-Api-Key': process.env.GOOGLE_API_KEY || '',
         'X-Goog-FieldMask': '*'
         // 'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.location,places.websiteUri'
     };
