@@ -13,16 +13,16 @@ export const getSites = async (
         nextPageToken?: string;
     }
 ): Promise<GetSitesResponse | null> => {
-    const {text, countryTitle} = params;
+    const {text, countryTitle, nextPageToken} = params;
     const existingSites = await getExistingSites();
-    const googleResponse = await searchPlaces(text, countryTitle);
+    const googleResponse = await searchPlaces(text, countryTitle, nextPageToken);
 
     if(!googleResponse) {
         return null;
     }
 
     const logPlaces: LogPlace[] = await Promise.all(
-        googleResponse.places.map(async (place) => {
+        googleResponse?.places?.map(async (place) => {
             const logPlace: LogPlace = {
                 displayName: place.displayName,
                 formattedAddress: place.formattedAddress,
@@ -70,7 +70,7 @@ export const getSites = async (
             }
 
             return logPlace;
-        })
+        }) || []
     );
 
     return {
