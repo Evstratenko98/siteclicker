@@ -8,8 +8,6 @@ export const searchPlaces = async (textQuery: string, countryKey: keyof typeof C
         throw new Error(`Неизвестная страна: ${countryKey}`);
     }
 
-    console.log('nextPageToken', nextPageToken);
-
     const fullQuery = `${textQuery} ${countryInfo.country}`;
 
     const url = 'https://places.googleapis.com/v1/places:searchText';
@@ -28,15 +26,13 @@ export const searchPlaces = async (textQuery: string, countryKey: keyof typeof C
         pageToken?: string;
     } = {
         languageCode: countryInfo.languageCode,
-        pageSize: 5,
+        pageSize: 20,
         textQuery: fullQuery,
     };
 
     if(nextPageToken) {
         body.pageToken = nextPageToken;
     }
-
-    console.log('body', body);
 
     try {
         const response = await fetch(url, {

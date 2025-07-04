@@ -21,7 +21,7 @@ const SitesOffCanvas = ({ isVisible, onClose, places, handleGetSites, disabled, 
                 tabIndex={-1}
                 style={{
                     visibility: isVisible ? 'visible' : 'hidden',
-                    width: '80%',
+                    width: '100%',
                     height: '100vh',
                     backgroundColor: 'white',
                     transition: 'transform 0.3s ease-in-out',

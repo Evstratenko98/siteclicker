@@ -24,6 +24,7 @@ export type FrontLogPlace = {
     formattedAddress: string;
     isWebsiteUri: boolean;
     websiteUri: string;
+    formatWebsiteUri?: string;
     isError: boolean;
     error: string;
     isLanding: boolean;

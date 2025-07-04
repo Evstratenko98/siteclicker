@@ -28,6 +28,7 @@ export const getSites = async (
                 formattedAddress: place.formattedAddress,
                 isWebsiteUri: !!place.websiteUri,
                 websiteUri: place.websiteUri,
+                formatWebsiteUri: place.websiteUri ? formatUrl(place.websiteUri) : undefined,
                 isError: false,
                 error: '',
                 isLanding: false,

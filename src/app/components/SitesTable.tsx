@@ -30,6 +30,7 @@ const SitesTable: React.FC<SitesTableProps> = ({ places }) => {
                     <th scope="col">Название</th>
                     <th scope="col">Адрес</th>
                     <th scope="col">Вебсайт</th>
+                    <th scope="col">Сокращенный вебсайт</th>
                     <th scope="col">Ошибка</th>
                     <th scope="col">Лендинг</th>
                     <th scope="col">Соц. сеть</th>
@@ -43,6 +44,7 @@ const SitesTable: React.FC<SitesTableProps> = ({ places }) => {
                         <td>{site.displayName?.text}</td>
                         <td>{site.formattedAddress}</td>
                         <td>{site.isWebsiteUri ? site.websiteUri : '—'}</td>
+                        <td>{site.formatWebsiteUri ? site.formatWebsiteUri : '—'}</td>
                         <td>{site.isError ? 'Да' : 'Нет'}</td>
                         <td>{site.isLanding ? 'Да' : 'Нет'}</td>
                         <td>{site.isSocialNetwork ? 'Да' : 'Нет'}</td>
